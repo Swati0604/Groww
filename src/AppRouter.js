@@ -14,7 +14,7 @@ function AppRouter() {
   return (
     <Switch>
       {/* Home */}
-      <Route path='/all-banks' exact component={Home} />
+      <Route path="(/home|/all-banks|/)/" component={Home} />
 
       {/* Bank Detail */}
       <Route path='/bank-details/:ifsc' exact component={BankDetail} />
