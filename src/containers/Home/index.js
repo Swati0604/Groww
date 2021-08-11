@@ -63,7 +63,7 @@ function Home(props) {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [bankDataPerPage] = useState(10);
-  const pageNumberLimit = useState(5);
+  const [pageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
   const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
 
