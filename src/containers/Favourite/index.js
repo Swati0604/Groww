@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from "react";
 
 //Custom Component
 import Sidebar from "../../components/SideBar";
@@ -10,6 +8,7 @@ import BankList from "../../components/BankList";
 //Styles
 import "./styles.scss";
 import Pagination from "../../components/Pagination";
+import { useSelector } from "react-redux";
 
 const location = [
   {
@@ -54,14 +53,13 @@ const category = [
 ];
 
 function Favourite(props) {
-  const [selectedCity, setSelectedCity] = useState("MUMBAI");
+  const [selectedCity, setSelectedCity] = useState("");
   const [cityListOpen, setCityListOpen] = useState(false);
   const [categoryListOpen, setCategoryListOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState();
   const [value, setValue] = useState("");
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [bankDataPerPage, setBankDataPerPage] = useState(10);
+  const [bankDataPerPage] = useState(10);
 
   const toggleCityList = () => {
     setCityListOpen(!cityListOpen);
@@ -87,39 +85,68 @@ function Favourite(props) {
     setValue(e.target.value);
   };
 
-  const favBankData = JSON.parse(localStorage.getItem('fav'));
-
+  const favBankData = useSelector((state) => state.favBank.favBank);
   const indexOfLastBank = currentPage * bankDataPerPage;
   const indexOfFirstBank = indexOfLastBank - bankDataPerPage;
 
+  console.log("State", selectedCity.toUpperCase());
+
   const filteredBankData = favBankData.filter((data) => {
-    if(selectedCategory==='Bank Id'){
+    if (selectedCategory === "Bank Id" && !selectedCity) {
       if (value === "") {
-      return data;
-    } else if (data.bank_id.toString().includes(value)) {
-      return data;
-    }}else if(selectedCategory==='IFSC'){
+        return data;
+      } else if (data.bank_id.toString().includes(value)) {
+        return data;
+      }
+    } else if (selectedCategory === "IFSC" && !selectedCity) {
       if (value === "") {
         return data;
       } else if (data.ifsc.toString().includes(value)) {
         return data;
       }
-    }
-    else if(selectedCategory==='Branch'){
+    } else if (selectedCategory === "Branch"  && !selectedCity) {
       if (value === "") {
         return data;
       } else if (data.branch.toString().includes(value)) {
         return data;
       }
-    }
-    else if(selectedCategory==='Address'){
+    } else if (selectedCategory === "Address"  && !selectedCity) {
       if (value === "") {
         return data;
       } else if (data.address.toString().includes(value)) {
         return data;
       }
-    }
-    else{
+    } else if (selectedCity) {
+      if (selectedCategory === "Bank Id") {
+        if (value === "") {
+          return data.city.toString() === selectedCity.toUpperCase();
+        } else if (data.bank_id.toString().includes(value)) {
+          return data.city.toString() === selectedCity.toUpperCase();
+        }
+      } else if (selectedCategory === "IFSC") {
+        if (value === "") {
+          return data.city.toString() === selectedCity.toUpperCase();;
+        } else if (data.ifsc.toString().includes(value)) {
+          return data.city.toString() === selectedCity.toUpperCase();;
+        }
+      } else if (selectedCategory === "Branch") {
+        if (value === "") {
+          return data.city.toString() === selectedCity.toUpperCase();;
+        } else if (data.branch.toString().includes(value)) {
+          return data.city.toString() === selectedCity.toUpperCase();;
+        }
+      } else if (selectedCategory === "Address") {
+        if (value === "") {
+          return data.city.toString() === selectedCity.toUpperCase();;
+        } else if (data.address.toString().includes(value)) {
+          return data.city.toString() === selectedCity.toUpperCase();;
+        }
+      }
+      else{
+      return data.city.toString() === selectedCity.toUpperCase();
+      }
+    }  
+    else {
       return data;
     }
   });
@@ -129,7 +156,6 @@ function Favourite(props) {
   const paginate = (pageNumbers) => {
     setCurrentPage(pageNumbers);
   };
-
 
   return (
     <div className="favourite-style">
@@ -151,7 +177,6 @@ function Favourite(props) {
         />
         <BankList
           bankData={currentBank}
-          loading={loading}
           selectedCategory={selectedCategory}
           searchInput={value}
         />

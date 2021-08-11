@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 //Custom Component
@@ -10,6 +9,8 @@ import BankList from "../../components/BankList";
 //Styles
 import "./styles.scss";
 import Pagination from "../../components/Pagination";
+import { useDispatch, useSelector } from "react-redux";
+import { allBank } from "../../redux/action";
 
 const location = [
   {
@@ -54,7 +55,6 @@ const category = [
 ];
 
 function Home(props) {
-  const [bankData, setBankData] = useState([]);
   const [selectedCity, setSelectedCity] = useState("MUMBAI");
   const [cityListOpen, setCityListOpen] = useState(false);
   const [categoryListOpen, setCategoryListOpen] = useState(false);
@@ -62,7 +62,14 @@ function Home(props) {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [bankDataPerPage, setBankDataPerPage] = useState(10);
+  const [bankDataPerPage] = useState(10);
+  const pageNumberLimit = useState(5);
+  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+
+  const dispatch = useDispatch();
+
+  const bankData = useSelector((state)=> state.allBank.allBank);
 
   const toggleCityList = () => {
     setCityListOpen(!cityListOpen);
@@ -94,7 +101,8 @@ function Home(props) {
       const res = await axios.get(
         `https://vast-shore-74260.herokuapp.com/banks?city=${selectedCity.toUpperCase()}`
       );
-      setBankData(res.data);
+      
+      dispatch(allBank(res.data));
       setLoading(false);
     };
 
@@ -142,15 +150,29 @@ function Home(props) {
     setCurrentPage(pageNumbers);
   };
 
-  //  itemSelected(index){
-  //   const temp = experience[index];
-  //   this.setState({
-  //     selectedValue: temp.title,
-  //     selectedId: temp.id + 1,
-  //   });
 
-  //   this.toggleList();
-  // }
+  const handleNextBtn = () => {
+    setCurrentPage(currentPage+1);
+
+    if(currentPage+1> maxPageNumberLimit){
+      setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
+      setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit);
+    }
+  }
+
+  const handlePrevBtn = () => {
+    if(currentPage>1){
+    setCurrentPage(currentPage-1);
+    }
+
+    
+    if(currentPage> 1 && ((currentPage - 1)%pageNumberLimit === 0)){
+      setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
+      setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
+    
+    }
+  }
+
 
   return (
     <div className="home-style">
@@ -184,6 +206,10 @@ function Home(props) {
             banksPerPage={bankDataPerPage}
             totalBanks={filteredBankData.length}
             paginate={paginate}
+            minPageNumberLimit={minPageNumberLimit}
+            maxPageNumberLimit={maxPageNumberLimit}
+            handleNextBtn={handleNextBtn}
+            handlePrevBtn={handlePrevBtn}
           />
         )}
       </Sidebar>

@@ -1,29 +1,35 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 //Custom Component
 import NotFound from "../NotFound";
 import Loader from "../Loader";
 
-//Images
-import loader from "../../assets/loader.gif";
-
 //Styles
 import "./styles.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { addToFavourites } from "../../redux/action";
 
 function BankList(props) {
-  var fav = [];
-  const addToFavourites = (data) => {
-    fav.push(data);
-
-    localStorage.setItem("fav", JSON.stringify(fav));
-    console.log(fav);
+  const dispatch = useDispatch();
+  const favBank = useSelector((state) => state.favBank.favBank);
+  const favPresentIfsc = favBank.map((fav) => fav.ifsc);
+  const addToFav = (data) => {
+    const newList = [...favBank, data];
+    dispatch(addToFavourites(newList));
+  };
+  const removeFromFav = (data) => {
+    const newList = [];
+    for(let i=0; i<favPresentIfsc.length; i++){
+      if(favPresentIfsc[i]!==data.ifsc){
+         newList.push(favBank[i]);
+      }
+    }
+    dispatch(addToFavourites(newList));
+    
   };
 
   if (props.loading) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   }
 
   return (
@@ -45,61 +51,38 @@ function BankList(props) {
           </div>
           {props.bankData &&
             props.bankData.map((data, index) => (
-              <Link
-                className="bank-list-container list-cont"
-                to={`/bank-details/${data.ifsc}`}
-                key={index}
-              >
-                <div className="list-entry name">{data.bank_name}</div>
-                <div className="list-entry ifsc">{data.ifsc}</div>
-                <div className="list-entry branch">{data.branch}</div>
-                <div className="list-entry id">{data.bank_id}</div>
-                <div className="list-entry address">{data.address}</div>
-                <div className="list-entry favourite">
-                      <button
-                        className="fav"
-                        onClick={() => {
-                          addToFavourites(data);
-                          console.log(data.bank_id);
-                        }}
-                      >
-                        Add
-                      </button>
-                    </div>
-                {/* {JSON.parse(localStorage.getItem("fav"))== null &&
-                  localStorage.getItem("fav").includes(data.ifsc) === false && (
-                    <div className="list-entry favourite">
-                      <button
-                        className="fav"
-                        onClick={() => {
-                          addToFavourites(data);
-                          console.log(data.bank_id);
-                        }}
-                      >
-                        Add
-                      </button>
-                    </div>
-                  )}
-
-                {localStorage.getItem("fav") !== null &&
-                  localStorage.getItem("fav").includes(data.ifsc) === true && (
-                    <div className="list-entry favourite">
-                      <button
-                        className="fav already-added"
-                        onClick={() => {
-                          addToFavourites(data);
-                          console.log(data.bank_id);
-                        }}
-                      >
-                        Added
-                      </button>
-                    </div>
-                  )} */}
-              </Link>
+              <div className="bank-list-container list-cont">
+                <Link
+                  className="link-list-container"
+                  to={`/bank-details/${data.ifsc}`}
+                  key={index}
+                >
+                  <div className="list-entry name">{data.bank_name}</div>
+                  <div className="list-entry ifsc">{data.ifsc}</div>
+                  <div className="list-entry branch">{data.branch}</div>
+                  <div className="list-entry id">{data.bank_id}</div>
+                  <div className="list-entry address">{data.address}</div>
+                </Link>
+                {favPresentIfsc.includes(data.ifsc) === false ? (
+                  <div className="list-entry favourite">
+                    <button className="fav" onClick={() => addToFav(data)}>
+                      Add
+                    </button>
+                  </div>
+                ) : (
+                  <div className="list-entry favourite">
+                    <button
+                      className="fav already-added"
+                      onClick={() => removeFromFav(data)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+              </div>
             ))}
         </div>
       )}
-      {console.log()}
     </>
   );
 }

@@ -2,16 +2,25 @@
 // ## PAGINATION.SCSS ## //
 // ######################################## //\
 
-@import '../../styles/variables/colors.scss';
-@import '../../styles/variables/mixins.scss';
+@import "../../styles/variables/colors.scss";
+@import "../../styles/variables/mixins.scss";
 
-.pagination-style{
+.pagination-style {
+  display: flex;
+  justify-content: flex-end;
+
+  .page-numbers {
+    list-style-type: none;
+    box-shadow: none;
+  }
+
+  .dot-box {
+    border: 1.4px solid rgba($secondary, 0.2);
+    width: 40px;
     display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    overflow: scroll;
-
-    .page-numbers{
-        list-style-type: none;
-    }
+    justify-content: center;
+    font-size: 16px;
+    align-items: center;
+    margin-bottom: 0;
+  }
 }

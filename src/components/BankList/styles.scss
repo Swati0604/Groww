@@ -21,6 +21,11 @@
         }
     }
 
+    .link-list-container{
+        display: contents;
+        width: 100%;
+    }
+
     .list{
         border: 1px solid $primary;
         width: 100%;
@@ -67,6 +72,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        z-index: 999;
     }
 
     .fav{
@@ -77,6 +83,7 @@
         border-radius: 4px;
         margin-bottom: 0;
         cursor: pointer;
+        width: 70px;
 
         &.already-added{
             background-color: $secondary;

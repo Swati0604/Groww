@@ -3,19 +3,64 @@ import React from "react";
 // Style
 import "./styles.scss";
 
-function Pagination({ banksPerPage, totalBanks, paginate }) {
+function Pagination({
+  banksPerPage,
+  totalBanks,
+  paginate,
+  maxPageNumberLimit,
+  minPageNumberLimit,
+  handlePrevBtn,
+  handleNextBtn,
+}) {
   const pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(totalBanks / banksPerPage); i++) {
+  const pages = totalBanks / banksPerPage;
+  for (let i = 1; i <= Math.ceil(pages); i++) {
     pageNumbers.push(i);
+  }
+
+  let pageIncrementBtn = null;
+  if (pages > maxPageNumberLimit) {
+    pageIncrementBtn = <li className='page-numbers dot-box' onClick={handleNextBtn}> ..... </li>;
+  }
+
+  let pageDecrementBtn = null;
+  if (minPageNumberLimit >= 1) {
+    pageDecrementBtn = <li className='page-numbers dot-box' onClick={handlePrevBtn}> ..... </li>;
   }
   return (
     <nav className="pagination-style">
-      {pageNumbers.map((data) => (
-        <li className='page-numbers' key={data}>
-            <a onClick={()=> paginate(data)} href="#!" className='page-link'>{data}</a>
-        </li>
-      ))}
+      <li className="page-numbers">
+        <a onClick={() => handlePrevBtn()} href="#!" className="page-link">
+          Prev
+        </a>
+      </li>
+
+      {pageDecrementBtn}
+
+      {pageNumbers.map((number) => {
+        if (number < maxPageNumberLimit + 1 && number > minPageNumberLimit) {
+          return (
+            <li className="page-numbers" key={number}>
+              <a
+                onClick={() => paginate(number)}
+                href="#!"
+                className="page-link"
+              >
+                {number}
+              </a>
+            </li>
+          );
+        } else {
+          return null;
+        }
+      })}
+
+      {pageIncrementBtn}
+      <li className="page-numbers">
+        <a onClick={() => handleNextBtn()} href="#!" className="page-link">
+          Next
+        </a>
+      </li>
     </nav>
   );
 }

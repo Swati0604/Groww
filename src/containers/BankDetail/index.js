@@ -5,9 +5,6 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/SideBar";
 import Loader from "../../components/Loader";
 
-//Images
-import loader from "../../assets/loader.gif";
-
 // Style
 import "./styles.scss";
 
@@ -60,11 +57,11 @@ function BankDetail(props) {
                       <span className="heading">Bank City:</span> {data.city}
                     </div>
                     <div className="bank-detail city">
-                      <span className="heading">Bank State:</span>{" "}
+                      <span className="heading">Bank District:</span>{" "}
                       {data.district}
                     </div>
                     <div className="bank-detail city">
-                      <span className="heading">Bank District:</span>{" "}
+                      <span className="heading">Bank State:</span>{" "}
                       {data.state}
                     </div>
                     <div className="bank-detail address">

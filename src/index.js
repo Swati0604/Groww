@@ -1,23 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter as Router } from "react-router-dom";
+
+//Redux
+import store from "./redux/store";
+import { Provider } from "react-redux";
 
 //Custom Component
-import AppRouter from './AppRouter';
+import AppRouter from "./AppRouter";
 
 //Styles
-import './index.css';
+import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      
+    <Provider store={store}>
+      <Router>
         <AppRouter />
-     
-    </Router>
+      </Router>
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
