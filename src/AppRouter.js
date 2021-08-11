@@ -1,8 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-
-//Page404
+//Custom Component
+import Home from './containers/Home';
+import BankDetail from './containers/BankDetail';
+import Favourite from './containers/Favourite';
 import Page404 from './containers/Page404';
 
 //Styles
@@ -12,7 +14,13 @@ function AppRouter() {
   return (
     <Switch>
       {/* Home */}
-     
+      <Route path='/all-banks' exact component={Home} />
+
+      {/* Bank Detail */}
+      <Route path='/bank-details/:ifsc' exact component={BankDetail} />
+      
+      {/* Favourite */}
+      <Route path='/favourite-bank/' exact component={Favourite} />
 
       {/* Page404 */}
       <Route path='' component={Page404} />

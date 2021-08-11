@@ -1,0 +1,52 @@
+// ######################################## //
+// ## Sidebar.SCSS ## //
+// ######################################## //
+
+//Title Section Style
+
+@import '../../styles/variables/colors.scss';
+@import '../../styles/variables/mixins.scss';
+
+.page-style{
+    .sidebar{
+        width: 22%;
+        position: fixed;
+        background: $primary;
+        height: 100%;
+        padding-left: 40px;
+
+        .side-link{
+            color: $white;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: normal;
+
+            &.opacity{
+                opacity: 0.6;
+            }
+        }
+
+        .bank-name{
+            color: $white;
+            font-size: 32px;
+            border-bottom: 2px solid $white;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: normal;
+            padding-top: 50px;
+            margin-bottom: 10px;
+            margin-right: 30px;
+        }
+
+        .side-link-container{
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .page-content{
+        margin-left: 22%;
+        padding: 50px 40px 0;
+    }
+}

@@ -1,0 +1,32 @@
+// ######################################## //
+// ## Sidebar.SCSS ## //
+// ######################################## //
+
+//Title Section Style
+
+@import '../../styles/variables/colors.scss';
+@import '../../styles/variables/mixins.scss';
+
+.bank-detail-style{
+    .bank-detail-container{
+        margin-bottom: 100px;
+        
+        .bank-detail{
+            padding: 10px;
+            font-family: 'Nunito', sans-serif;
+            color: $primary;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .heading{
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+        }
+    }
+
+    .heading{
+        text-align: center;
+        margin-bottom: 40px;
+    }
+}

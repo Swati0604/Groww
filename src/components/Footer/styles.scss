@@ -1,0 +1,28 @@
+// ######################################## //
+// ## FOOTER.SCSS ## //
+// ######################################## //\
+
+@import '../../styles/variables/colors.scss';
+@import '../../styles/variables/mixins.scss';
+
+.footer-style {
+  .coming-soon-container {
+    text-align: center;
+  }
+
+  .coming-soon {
+    background-color: #01bcff;
+    padding: 2px;
+    color: $white;
+  }
+
+  .footer-text {
+    margin-bottom: 28px;
+    padding-top: 30px;
+    text-align: center;
+  }
+
+  .highlighted-text {
+    color: $secondary;
+  }
+}

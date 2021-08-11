@@ -1,0 +1,21 @@
+// ######################################## //
+// ## HEADER.SCSS ## //
+// ######################################## //\
+
+
+@import '../../styles/variables/colors.scss';
+@import '../../styles/variables/mixins.scss';
+
+.header-style{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .select-search-tag{
+        display: flex;
+        
+        .mid{
+            margin: 0 10px;
+        }
+    }
+}

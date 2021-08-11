@@ -15,6 +15,8 @@ body {
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin-top: 0;
+  height: 100%;
 }
 
 a {
@@ -25,7 +27,7 @@ a {
   color: $primary;
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  font-size: 26px;
+  font-size: 32px;
   line-height: 36px;
   margin-bottom: 0px;
 }
@@ -132,5 +134,24 @@ a {
 
   &:focus {
     outline: none;
+  }
+}
+
+.loading-container{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .loader{
+      height: 100px;
+  }
+
+  .loader-text{
+      color: $primary;
+      font-size: 22px;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
   }
 }

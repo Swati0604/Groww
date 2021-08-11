@@ -1,0 +1,17 @@
+// ######################################## //
+// ## PAGINATION.SCSS ## //
+// ######################################## //\
+
+@import '../../styles/variables/colors.scss';
+@import '../../styles/variables/mixins.scss';
+
+.pagination-style{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    overflow: scroll;
+
+    .page-numbers{
+        list-style-type: none;
+    }
+}
